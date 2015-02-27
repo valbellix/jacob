@@ -1,2 +1,2 @@
-# jacob
-Just Another COde Brower
+# About
+Just Another COde Browser (aka jacob) is a Sublime Text 3 plugin that helps in code browsing. It works in a very naive way, leveraging on ST3 symbol indexer. It means that can browse through anything that can be indexed by ST3, and it does not need any third-parties software installed. You can obviously do this using CTags, but this is what I would like to avoid. Anyway CTags offer more than mere code browsing, and if you want something more elaborated you may want to use it, but what I really want to do is to get rid of ctags files that may be huge for very big projects.
