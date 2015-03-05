@@ -17,6 +17,7 @@ class JacobGoToCommand(sublime_plugin.TextCommand):
             self.navigate_to(symbol)
 
     def navigate_to(self, sym):
+        # Todo: do it better...
         self.locations = []
         for loc in self.where_is(sym):
             self.locations.append(str(loc))
