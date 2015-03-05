@@ -17,20 +17,25 @@ class JacobGoToCommand(sublime_plugin.TextCommand):
             self.navigate_to(symbol)
 
     def navigate_to(self, sym):
-        # Todo: do it better...
         self.locations = []
         for loc in self.where_is(sym):
-            self.locations.append(str(loc))
+            # TODO this can be obviously improved adding two entries per location for a better visualization
+            file_and_pos = get_file_with_position(loc)
+
+            if file_and_pos.startswith('<untitled'):
+                pass
+
+            self.locations.append(file_and_pos)
 
         if len(self.locations) == 1:
-            self.view.window().open_file(get_file_with_position(self.locations[0]), sublime.ENCODED_POSITION)
+            self.view.window().open_file(self.locations[0], sublime.ENCODED_POSITION)
         elif len(self.locations) > 1:
-            self.view.window().show_quick_panel([self.locations], self.on_select)
+            self.view.window().show_quick_panel(self.locations, self.on_select)
         else:
             pass
 
     def on_select(self, index):
-        self.view.window().open_file(get_file_with_position(self.locations[index]), sublime.ENCODED_POSITION)
+        self.view.window().open_file(self.locations[index], sublime.ENCODED_POSITION)
 
     def where_is(self, sym):
         locations = []
