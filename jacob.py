@@ -1,6 +1,12 @@
 """Just Another COde Browser"""
 
-import sublime, sublime_plugin
+import sublime, sublime_plugin, os
+
+def get_position_string(tuple):
+    return ':' + str(tuple[0]) + ':' + str(tuple[1])
+
+def get_file_with_position(location):
+    return location[0] + get_position_string(location[2])
 
 class JacobGoToCommand(sublime_plugin.TextCommand):
     def run(self, edit):
@@ -19,23 +25,19 @@ class JacobGoToCommand(sublime_plugin.TextCommand):
     def navigate_to(self, sym):
         self.locations = []
         for loc in self.where_is(sym):
-            # TODO this can be obviously improved adding two entries per location for a better visualization
             file_and_pos = get_file_with_position(loc)
 
-            if file_and_pos.startswith('<untitled'):
-                pass
-
-            self.locations.append(file_and_pos)
+            self.locations.append([os.path.basename(file_and_pos), file_and_pos]);
 
         if len(self.locations) == 1:
-            self.view.window().open_file(self.locations[0], sublime.ENCODED_POSITION)
+            self.go_to(self.locations[0])
         elif len(self.locations) > 1:
             self.view.window().show_quick_panel(self.locations, self.on_select)
         else:
             pass
 
     def on_select(self, index):
-        self.view.window().open_file(self.locations[index], sublime.ENCODED_POSITION)
+        self.go_to(self.locations[index][1])
 
     def where_is(self, sym):
         locations = []
@@ -47,8 +49,5 @@ class JacobGoToCommand(sublime_plugin.TextCommand):
 
         return locations;
 
-def get_position_string(tuple):
-    return ':' + str(tuple[0]) + ':' + str(tuple[1])
-
-def get_file_with_position(location):
-    return location[0] + get_position_string(location[2])
+    def go_to(self, loc):
+        self.view.window().open_file(loc, sublime.ENCODED_POSITION)
