@@ -15,6 +15,7 @@ There is really little to do to set up jacob. If you have git installed, just cl
 * Portable Installation: `Sublime Text 3/Data/Packages`
 
 and clone the repository:
+
     git clone https://github.com/valbellix/jacob.git
 
 You can install this plugin manually downloading it [here](https://github.com/valbellix/jacob/archive/master.zip) and unzipping into its location (see above).
