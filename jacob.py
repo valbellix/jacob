@@ -30,7 +30,7 @@ class JacobGoToCommand(sublime_plugin.TextCommand):
             self.locations.append([os.path.basename(file_and_pos), file_and_pos]);
 
         if len(self.locations) == 1:
-            self.go_to(self.locations[0])
+            self.go_to(self.locations[0][1])
         elif len(self.locations) > 1:
             self.view.window().show_quick_panel(self.locations, self.on_select)
         else:
