@@ -7,16 +7,18 @@ Just Another COde Browser (aka jacob) is a Sublime Text 3 plugin that helps in c
 
 Installation and setup
 ----------------------
-There is really little to do to set up jacob. If you have git installed, just clone this repository into your ST3 package directory. Usually you can found it in:
+There is really little to do to set up jacob. If you have git installed, just clone this repository into your ST3 package directory. Usually you can find this directory in:
 
 * Windows: `%APPDATA%\Sublime Text 3\Packages`
 * OS X: `~/Library/Application Support/Sublime Text 3/Packages`
 * Linux: `~/.config/sublime-text-3/Packages`
 * Portable Installation: `Sublime Text 3/Data/Packages`
 
-and clone the repository:
+Just clone the repository:
 
     git clone https://github.com/valbellix/jacob.git
+
+Et voilà! jacob is ready to work for you.
 
 You can install this plugin manually downloading it [here](https://github.com/valbellix/jacob/archive/master.zip) and unzipping into its location (see above).
 
