@@ -1,0 +1,6 @@
+[
+	{
+		"command": "jacob_go_to",
+		"keys": ["ctrl+shift+period"]
+	}
+]
