@@ -8,14 +8,18 @@ import sublime, sublime_plugin, os
 def get_position_string(tuple):
     return ':' + str(tuple[0]) + ':' + str(tuple[1])
 
+def get_line_suffix(tuple):
+    return ':' + str(tuple[0])
+
 def get_file_with_position(location):
     return location[0] + get_position_string(location[2])
 
 class Location(object):
     def __init__(self, loc):
-        self.file_name = os.path.basename(loc[0])
+        line = get_line_suffix(loc[2])
+        self.file_name = os.path.basename(loc[0]) + line
         self.file_pos = get_file_with_position(loc)
-        self.pretty_name = os.path.normpath(self.file_name)
+        self.pretty_name = os.path.normpath(loc[0]) + line
 
     def to_display(self):
         return [self.file_name, self.pretty_name]
