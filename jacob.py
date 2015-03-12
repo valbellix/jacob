@@ -42,19 +42,28 @@ def get_location_list(locations):
     return locs;
 
 class JacobGoToCommand(sublime_plugin.TextCommand):
-    '''This is the place where the magic happens...'''
-    def run(self, edit):
-        self.locations = []
-        region = self.view.sel()[0]
-        if region.begin() == region.end(): # is a point
-            region = self.view.word(region)
+    history_stack = []
+    
+    def run(self, edit, cmd):
+        '''This is the place where the magic happens...'''
+        if cmd == 'forward':
+            self.locations = []
+            region = self.view.sel()[0]
+            if region.begin() == region.end(): # is a point
+                region = self.view.word(region)
 
-        symbol = self.view.substr(region)
-        
-        if len(symbol) == 0:
-            pass
-        else:
-            self.navigate_to(symbol)
+            symbol = self.view.substr(region)
+            
+            if len(symbol) == 0:
+                pass
+            else:
+                self.navigate_to(symbol)
+        elif cmd == 'back':
+            self.go_back()
+
+    def go_back(self):
+        '''It navigates the history backwards'''
+        self.go_to(self.history_stack.pop())
 
     def navigate_to(self, sym):
         '''This method brings you directly to the definition
@@ -65,7 +74,7 @@ class JacobGoToCommand(sublime_plugin.TextCommand):
             self.locations.append(Location(loc))
 
         if len(self.locations) == 1:
-            self.go_to(self.locations[0])
+            self.go_to(self.locations[0].file_pos)
         elif len(self.locations) > 1:
             self.view.window().show_quick_panel(get_location_list(self.locations), self.on_select)
         else:
@@ -73,7 +82,7 @@ class JacobGoToCommand(sublime_plugin.TextCommand):
 
     def on_select(self, index):
         '''It is the callback of show_quick_panel'''
-        self.go_to(self.locations[index])
+        self.go_to(self.locations[index].file_pos)
 
     def where_is(self, sym):
         '''This method will look for the symbol in the project
@@ -90,4 +99,5 @@ class JacobGoToCommand(sublime_plugin.TextCommand):
     def go_to(self, loc):
         '''This is the method that will bring you to the 
         point where is defined the symbol you are looking for'''
-        self.view.window().open_file(loc.file_pos, sublime.ENCODED_POSITION)
+        self.view.window().open_file(loc, sublime.ENCODED_POSITION)
+        self.history_stack.insert(0, loc)

@@ -26,6 +26,8 @@ Usage
 -----
 Be on the symbol you need to look for, and press `ctrl+shift+period`. If your ST3 index has more than one location, a panel will show you where it is, otherwise it will navigate directly to the symbol definition. You can also use this keyboard+mouse combo: `ctrl+alt+right-click`.
 
+To navigate back, just `ctrl+shift+comma`, or `ctrl+alt+right-click`.
+
 Future
 ------
-For the future, I would like to implement a "navigate back" feature...
+I need to improve the panel, it looks ugly on Windows...

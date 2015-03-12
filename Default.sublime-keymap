@@ -1,6 +1,12 @@
 [
 	{
 		"command": "jacob_go_to",
+		"args": {"cmd": "forward"},
 		"keys": ["ctrl+shift+period"]
+	},
+	{
+		"command": "jacob_go_to",
+		"args": {"cmd": "back"},
+		"keys": ["ctrl+shift+comma"]
 	}
 ]
