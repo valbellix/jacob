@@ -63,7 +63,8 @@ class JacobGoToCommand(sublime_plugin.TextCommand):
 
     def go_back(self):
         '''It navigates the history backwards'''
-        self.go_to(self.history_stack.pop())
+        if len(self.history_stack) > 0:
+            self.go_to(self.history_stack.pop())
 
     def navigate_to(self, sym):
         '''This method brings you directly to the definition
