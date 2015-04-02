@@ -83,7 +83,8 @@ class JacobGoToCommand(sublime_plugin.TextCommand):
 
     def on_select(self, index):
         '''It is the callback of show_quick_panel'''
-        self.go_to(self.locations[index].file_pos)
+        if index != -1:
+            self.go_to(self.locations[index].file_pos)
 
     def where_is(self, sym):
         '''This method will look for the symbol in the project
