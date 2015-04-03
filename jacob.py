@@ -23,11 +23,19 @@ def get_file_with_position(location):
 class Location(object):
     '''This class manages the elements to display in the panel
     when a symbol is defined in multiple locations'''
-    def __init__(self, loc):
+    def __init__(self, loc, window):
         line = get_line_suffix(loc[2])
         self.file_name = os.path.basename(loc[0]) + line
         self.file_pos = get_file_with_position(loc)
-        self.pretty_name = os.path.normpath(loc[0]) + line
+        if window.project_file_name() is not None:
+            self.pretty_name = loc[1] + line
+        else:
+            file_path = loc[0]
+            if window.extract_variables()['platform'] == 'Windows':
+                drive_letter = loc[0][1:2] + ':\\'
+                file_path = drive_letter + os.path.normpath(file_path[3:])
+
+            self.pretty_name = file_path + line
 
     def to_display(self):
         '''It returns a list suitable for show_quick_panel list element'''
@@ -53,7 +61,7 @@ class JacobGoToCommand(sublime_plugin.TextCommand):
                 region = self.view.word(region)
 
             symbol = self.view.substr(region)
-            
+
             if len(symbol) == 0:
                 pass
             else:
@@ -72,7 +80,7 @@ class JacobGoToCommand(sublime_plugin.TextCommand):
         otherwise it will open a panel where you have to choose
         where to go'''
         for loc in self.where_is(sym):
-            self.locations.append(Location(loc))
+            self.locations.append(Location(loc, self.view.window()))
 
         if len(self.locations) == 1:
             self.go_to(self.locations[0].file_pos)
